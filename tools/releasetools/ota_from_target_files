@@ -113,7 +113,7 @@ OPTIONS.require_verbatim = set()
 OPTIONS.prohibit_verbatim = set(("system/build.prop",))
 OPTIONS.patch_threshold = 0.95
 OPTIONS.wipe_user_data = False
-OPTIONS.omit_prereq = False
+OPTIONS.omit_prereq = True
 OPTIONS.extra_script = None
 OPTIONS.aslr_mode = True
 OPTIONS.worker_threads = multiprocessing.cpu_count() // 2
@@ -475,13 +475,8 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.Mount("/oem", recovery_mount_options)
     oem_dict = common.LoadDictionaryFromLines(open(OPTIONS.oem_source).readlines())
 
-  metadata = {"post-build": CalculateFingerprint(
-                               oem_props, oem_dict, OPTIONS.info_dict),
-              "pre-device": GetOemProperty("ro.product.device", oem_props, oem_dict,
-                                         OPTIONS.info_dict),
-              "post-timestamp": GetBuildProp("ro.build.date.utc",
-                                             OPTIONS.info_dict),
-              }
+  metadata = {"pre-device": GetOemProperty("ro.product.device", oem_props, oem_dict,
+                                         OPTIONS.info_dict)}
 
   device_specific = common.DeviceSpecificParams(
       input_zip=input_zip,
