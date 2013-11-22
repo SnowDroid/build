@@ -82,6 +82,9 @@ PRODUCT_COPY_FILES := \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.carrier=unknown
 
+# Call vendor repo
+$(call inherit-product-if-exists, vendor/jbott/config/core.mk)
+
 $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
 $(call inherit-product-if-exists, external/noto-fonts/fonts.mk)
 $(call inherit-product-if-exists, external/naver-fonts/fonts.mk)
