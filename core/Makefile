@@ -1293,8 +1293,9 @@ ifneq ($(recovery_fstab),)
 # OTA update package
 
 date = $(shell date +%Y%m%d-%H%M)
+device = $(shell echo -n $(TARGET_PRODUCT) | sed -e 's/^.*_//g')
 
-name := SnowDroid-$(date)-$(TARGET_PRODUCT)
+name := SnowDroid-$(date)-$(device)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
